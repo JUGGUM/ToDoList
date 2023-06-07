@@ -1,12 +1,14 @@
 package com.mysite.todo.ToDoList;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@RequiredArgsConstructor
+@Getter
+@Setter
 @Entity
-public class TodoEntity {
+public class ToDoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
