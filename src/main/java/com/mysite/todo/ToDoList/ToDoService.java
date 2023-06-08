@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -15,6 +16,10 @@ public class ToDoService {
         return this.toDoRepository.findAll();
     }
 
+    public Optional<ToDoEntity> findOne(Integer id) {
+        return toDoRepository.findById(id);
+    }
+    
     public void create(String content) {
         ToDoEntity toDoEntity = new ToDoEntity();
         toDoEntity.setContent(content);
@@ -30,10 +35,11 @@ public class ToDoService {
 
         this.toDoRepository.delete(toDoEntity);
     }
+
     @Transactional
-    public void update(Integer id, String content){
+    public void update(Integer id, String content) {
         ToDoEntity toDoEntity = toDoRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 아이템이 존재하지 않습니다. id = " + id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 아이템이 존재하지 않습니다. id = " + id));
 
         toDoEntity.setContent(content);
         this.toDoRepository.save(toDoEntity);
