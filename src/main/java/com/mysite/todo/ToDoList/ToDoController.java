@@ -1,11 +1,13 @@
 package com.mysite.todo.ToDoList;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -25,6 +27,11 @@ public class ToDoController {
         return "redirect:/todo";
     }
 
+    @GetMapping("/todo/show/{id}")
+    public ResponseEntity<Optional<ToDoEntity>> todoList(@PathVariable Integer id){
+        Optional<ToDoEntity> toDoEntity = this.toDoService.findOne(id);
+        return ResponseEntity.ok(toDoEntity);
+    }
     @PostMapping("/todo/create")
     public String todoCreate(@RequestParam String content){
         this.toDoService.create(content);
