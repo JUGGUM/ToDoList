@@ -12,8 +12,8 @@ import java.util.Optional;
 public class ToDoService {
     private final ToDoRepository toDoRepository;
 
-    public List<ToDoEntity> getList() {
-        return this.toDoRepository.findAll();
+    public List<ToDoEntity> findAll() {
+        return toDoRepository.findAll();
     }
 
     public Optional<ToDoEntity> findOne(Integer id) {
