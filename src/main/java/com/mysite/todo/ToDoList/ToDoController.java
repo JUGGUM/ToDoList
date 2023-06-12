@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +17,14 @@ public class ToDoController {
     private final ToDoService toDoService;
 
     @RequestMapping("/todo")
-    public String list(Model model){
-        List<ToDoEntity> toDoEntityList = this.toDoService.getList();
-        System.out.println(toDoEntityList);
-        model.addAttribute("toDoEntityList", toDoEntityList);
-        return"todolist";
+    public ResponseEntity<List<ToDoResponseDto>> list(Model model){
+        List<ToDoEntity> toDoList = toDoService.findAll();
+        List<ToDoResponseDto> responseDtos = new ArrayList<>();
+//        model.addAttribute("toDoEntityList", toDoList);
+        for(ToDoEntity toDo : toDoList){
+            responseDtos.add(new ToDoResponseDto(toDo));
+        }
+        return ResponseEntity.ok(responseDtos);
     }
     @RequestMapping("/")
     public String root(){
